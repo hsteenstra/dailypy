@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Code For ME Daily Challenge</title>
+<meta name="description" content="A new free Python challenge every day from Code For ME. Runs in your browser, no account needed." />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%237497af%22/><text x=%2250%22 y=%2266%22 font-size=%2252%22 font-family=%22monospace%22 fill=%22white%22 text-anchor=%22middle%22>&lt;/&gt;</text></svg>" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="logo" href="#top">
+      <span class="logo-mark">&lt;/&gt;</span> Code For ME
+      <span class="logo-tag">Daily</span>
+    </a>
+    <nav class="site-nav">
+      <a href="#challenge">Today</a>
+      <a href="#archive">Past days</a>
+      <a href="#how">How it works</a>
+      <a class="btn-site" href="https://codeforme.org" target="_blank" rel="noopener">codeforme.org</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <span class="eyebrow" id="day-label">Day 1</span>
+      <h1>One puzzle.<br /><span class="highlight">Every day.</span></h1>
+      <p>A new Python challenge every day. Write your code, check it right here, and keep your streak going. Free, with no account.</p>
+      <div class="hero-actions">
+        <a class="btn-primary btn-lg" href="#challenge">Start today's challenge</a>
+        <span class="countdown" id="countdown"></span>
+      </div>
+    </div>
+    <div class="hero-art">
+      <img src="assets/byte.png" alt="Byte, the Code For ME robot" width="182" height="214" />
+    </div>
+  </div>
+
+  <div class="stats" aria-label="Your progress">
+    <div class="stat"><span class="stat-num" id="stat-points">0</span><span class="stat-label">Points</span></div>
+    <div class="stat"><span class="stat-num" id="stat-solved">0</span><span class="stat-label">Challenges solved</span></div>
+    <div class="stat"><span class="stat-num" id="stat-streak">0</span><span class="stat-label">Day streak</span></div>
+  </div>
+  <p class="stats-note">Progress is saved in this browser only.</p>
+
+  <svg class="hero-wave" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,32 C240,64 480,0 720,16 C960,32 1200,64 1440,32 L1440,60 L0,60 Z"></path>
+  </svg>
+</section>
+
+<main>
+  <section class="challenge reveal" id="challenge">
+    <div class="day-head">
+      <div>
+        <span class="day-kicker" id="day-kicker">Today</span>
+        <h2 id="ch-title">Challenge</h2>
+        <div class="ch-meta" id="ch-meta"></div>
+      </div>
+      <div class="day-head-side">
+        <span class="solved-badge hidden" id="solved-badge"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7"/></svg>Solved</span>
+        <a class="back-link hidden" id="back-link" href="#challenge">Back to today</a>
+      </div>
+    </div>
+
+    <div class="workspace">
+      <article class="card brief">
+        <h3>The challenge</h3>
+        <div class="prompt" id="ch-prompt"></div>
+
+        <div class="examples" id="ch-examples"></div>
+
+        <div class="hints">
+          <h4>Stuck?</h4>
+          <div id="hint-list"></div>
+          <button class="btn-ghost" id="hint-btn">Show a hint</button>
+        </div>
+
+        <details class="solution" id="solution">
+          <summary id="solution-summary">Solution</summary>
+          <pre><code id="solution-code"></code></pre>
+        </details>
+      </article>
+
+      <div class="card editor-card">
+        <div class="panel-header">
+          <span class="panel-title"><span class="dot"></span>main.py</span>
+          <div class="panel-actions">
+            <button class="btn-ghost" id="reset-btn" title="Put the starter code back">Reset</button>
+            <button class="btn-ghost" id="run-btn" disabled>Run</button>
+            <button class="btn-primary" id="check-btn" disabled>Check my code</button>
+          </div>
+        </div>
+        <div class="editor-wrap">
+          <pre class="gutter" id="gutter" aria-hidden="true">1</pre>
+          <textarea id="editor" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Python code editor"></textarea>
+        </div>
+        <div class="console">
+          <div class="console-head">
+            <span>Output</span>
+            <span class="status" id="status">Loading Python…</span>
+          </div>
+          <pre id="output" class="output"><span class="muted">Press Run to try your code, or Check my code to test it.</span></pre>
+        </div>
+        <div class="results hidden" id="results"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="archive reveal" id="archive">
+    <h2>Past days</h2>
+    <p class="section-sub">Missed one? Every old challenge stays open, and you can see the solutions.</p>
+    <div class="archive-grid" id="archive-grid"></div>
+    <button class="btn-ghost archive-more hidden" id="archive-more">Show older days</button>
+  </section>
+
+  <section class="how reveal" id="how">
+    <h2>How it works</h2>
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">1</span>
+        <h3>A new puzzle daily</h3>
+        <p>A fresh challenge unlocks every day at midnight. Difficulty rotates <strong>Easy</strong>, <strong>Medium</strong>, <strong>Hard</strong>, so there's always something you can do.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">2</span>
+        <h3>Write and run</h3>
+        <p>Type Python in the editor and press <strong>Run</strong> to see what it prints. Everything runs in your browser, so there's nothing to install.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">3</span>
+        <h3>Check it</h3>
+        <p><strong>Check my code</strong> tests your answer. Pass every test to earn points, grow your streak, and unlock the solution.</p>
+      </div>
+    </div>
+
+    <div class="teacher">
+      <div>
+        <h3>Teachers and club leaders</h3>
+        <p>Put today's challenge on the board as a warm-up, or have students keep a streak going. It works on school Chromebooks, and students don't need to sign up. New to Python? The free <a href="https://hsteenstra.github.io/workbook" target="_blank" rel="noopener">Code For ME Workbook</a> covers everything these challenges use.</p>
+      </div>
+      <a class="btn-primary" href="https://codeforme.org" target="_blank" rel="noopener">More from Code For ME</a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>Made in Bath, Maine by <a href="https://codeforme.org" target="_blank" rel="noopener">Code For ME</a>. Free for every student.</p>
+  <p>Questions or challenge ideas? <a href="mailto:codeformaine@gmail.com">codeformaine@gmail.com</a></p>
+</footer>
+
+<div class="toast hidden" id="toast" role="status" aria-live="polite">
+  <img src="assets/byte.png" alt="" width="44" height="52" />
+  <div><strong id="toast-title">Nice work!</strong><span id="toast-text"></span></div>
+</div>
+
+<script src="challenges.js"></script>
+<script src="challenges-easy.js"></script>
+<script src="challenges-medium.js"></script>
+<script src="challenges-hard.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
